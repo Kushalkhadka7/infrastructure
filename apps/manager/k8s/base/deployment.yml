@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manager
+  labels:
+    app: manager
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: manager
+  template:
+    metadata:
+      labels:
+        app: manager
+    spec:
+      containers:
+        - name: manager
+          image: crkushal7/manager:1.0.2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-manager-config
+                  key: PORT
+            - name: NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-manager-config
+                  key: NAME
+            - name: HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-manager-config
+                  key: HOST
+            - name: ADMIN_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-manager-config
+                  key: ADMIN_URL
+            - name: MANAGER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-manager-config
+                  key: MANAGER_URL

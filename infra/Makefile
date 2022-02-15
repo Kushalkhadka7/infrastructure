@@ -33,6 +33,7 @@ APP_ROOT ?= $(shell 'pwd')
 CLUSTER_CONFIG ?= $(APP_ROOT)/cluster/config.yml
 CLUSTER_NAME ?= "infra"
 METAL_LB ?= $(APP_ROOT)/metallb
+METRIC_SERVER ?= $(APP_ROOT)/metricserver
 
 cluster: ## create cluster
 	@kind create cluster --name $(CLUSTER_NAME) --config $(CLUSTER_CONFIG)
@@ -50,6 +51,9 @@ cluster-lb: ## deploy metallb overlay network to cluster
 	@kubectl apply -f $(METAL_LB)/namespace.yml
 	@kubectl apply -f $(METAL_LB)/metallb.yml
 	@kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)" 
+
+metric-srv:
+	@kubectl apply -f $(METRIC_SERVER)/deployment.yml
 
 help:
 	@python3 -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)

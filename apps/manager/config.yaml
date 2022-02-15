@@ -1,0 +1,4 @@
+Server:
+  Port: 5000
+  ReadTimeOut: 300
+  WriteTimeOut: 300
