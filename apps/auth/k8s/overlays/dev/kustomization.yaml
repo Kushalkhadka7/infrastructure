@@ -9,7 +9,7 @@ resources:
   - ../../base
 images:
   - name: crkushal7/auth
-    newTag: 2.0.1
+    newTag: 2.0.0
 configMapGenerator:
   - envs:
       - .env
