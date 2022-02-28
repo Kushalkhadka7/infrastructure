@@ -8,8 +8,8 @@ namespace: dev
 resources:
 - ../../base
 images:
-- name: app/auth
-  newName: crkushal7/app/auth
+- name: crkushal7/auth
+  newTag: 1.0.0
 configMapGenerator:
 - envs:
   - .env
