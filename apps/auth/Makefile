@@ -27,6 +27,7 @@ export PRINT_HELP_PYSCRIPT
 APP_ROOT ?= $(shell 'pwd')
 
 export ENVIRONMENT_OVERRIDE_PATH ?= $(APP_ROOT)/env/Makefile.override.dev
+export OVERLAY_ROOT ?= k8s/overlays
 export OVERLAY_PATH ?= k8s/overlays/$(STAGE)
 
 export ENV_FILE ?= .env
@@ -68,10 +69,9 @@ docker-login:
 run: ## run docker contianer
 	@docker run -p $(HOST_PORT):$(CONTINER_PORT) --env-file=$(ENV_FILE) $(SOURCE_IMAGE)
 
-
 edit-kustomize:
 	echo $(ENV_PATH)
-	@cp $(OVERLAY_PATH)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
+	@cp $(OVERLAY_ROOT)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
 	@cp $(ENV_PATH) $(OVERLAY_PATH)/.env
 	@cd $(OVERLAY_PATH) && kustomize edit add configmap auth-config --from-env-file .env
 
