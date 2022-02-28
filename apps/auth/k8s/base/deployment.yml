@@ -48,27 +48,27 @@ spec:
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: dev-auth-config
+                  name: dev-auth-config-h7h88m99gf
                   key: PORT
             - name: NAME
               valueFrom:
                 configMapKeyRef:
-                  name: dev-auth-config
+                  name: dev-auth-config-h7h88m99gf
                   key: NAME
             - name: HOST
               valueFrom:
                 configMapKeyRef:
-                  name: dev-auth-config
+                  name: dev-auth-config-h7h88m99gf
                   key: HOST
             - name: ADMIN_URL
               valueFrom:
                 configMapKeyRef:
-                  name: dev-auth-config
+                  name: dev-auth-config-h7h88m99gf
                   key: ADMIN_URL
             - name: MANAGER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: dev-auth-config
+                  name: dev-auth-config-h7h88m99gf
                   key: MANAGER_URL
             - name: MONGO_DB_URL
               valueFrom:
