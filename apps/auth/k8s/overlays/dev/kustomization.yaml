@@ -9,12 +9,8 @@ resources:
   - ../../base
 images:
   - name: crkushal7/auth
-    newTag: 2.1.3
+    newTag: 2.0.1
 configMapGenerator:
-  - name: auth-config
-    literals:
-      - NAME=auth
-      - PORT=4000
-      - HOST=localhost
-      - ADMIN_URL=dev-admin-service
-      - MANAGER_URL=dev-manager-service
+  - envs:
+      - .env
+    name: auth-config
