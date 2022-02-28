@@ -7,3 +7,4 @@ resources:
   - service.yml
   - namespace.yml
   - deployment.yml
+  - secrets.yml

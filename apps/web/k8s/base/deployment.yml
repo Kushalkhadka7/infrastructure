@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      volumes:
+        - name: auth-cred
+          secret:
+            secretName: dev-auth-secret
+
+        - name: shared-volume
+          emptyDir: {}
+
+      initContainers:
+        - name: busybox
+          image: busybox
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /shared
+          command: ["/bin/sh"]
+          args: ["-c", "echo 'hello kuberenetes' > /shared/abc.txt"]
+
+      containers:
+        - name: web
+          image: crkushal7/web:1.0.0
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: auth-cred
+              mountPath: /data
+
+            - name: shared-volume
+              mountPath: /data2
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-web-config
+                  key: PORT
+            - name: HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-web-config
+                  key: HOST
+            - name: ADMIN_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-web-config
+                  key: ADMIN_URL
+            - name: MANAGER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-web-config
+                  key: MANAGER_URL
+            - name: NGINX_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-web-config
+                  key: NGINX_URL

@@ -4,6 +4,8 @@ commonLabels:
   app: manager
 namespace: dev
 resources:
-  - service.yml
   - namespace.yml
+  - secrets.yml
+  - service.yml
   - deployment.yml
+  - hpa.yml

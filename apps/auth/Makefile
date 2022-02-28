@@ -36,9 +36,9 @@ export STAGE_PROD ?= 'prod'
 export CONTINER_PORT ?= 4000
 export DOCKER_BUILD_FLAGS ?= --no-cache
 export DOCKER_BUILD_PATH ?= $(APP_ROOT)
-export SOURCE_IMAGE ?= redistri-api-server
+export SOURCE_IMAGE ?= auth
 export DOCKER_FILE ?= $(APP_ROOT)/Dockerfile
-export TARGET_IMAGE ?= $(REGISTRY_URL)/$(ECR_REPO_NAME):$(SOURCE_IMAGE)
+export TARGET_IMAGE ?= $(REGISTRY_URL)/$(SOURCE_IMAGE):$(VERSION)
 
 -include $(ENVIRONMENT_OVERRIDE_PATH)
 include $(APP_ROOT)/Makefile.app
@@ -54,7 +54,7 @@ build-prod: ## build docker image for prod env
 	@docker build $(DOCKER_BUILD_FLAGS) -t $(SOURCE_IMAGE) --target $(STAGE_PROD) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
 
 docker-build: ## build docker image
-	@docker build $(DOCKER_BUILD_FLAGS) -t $(SOURCE_IMAGE) --target $(TARGET_STAGE) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
+	@docker build $(DOCKER_BUILD_FLAGS) -t $(TARGET_IMAGE) --target $(TARGET_STAGE) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
 
 docker-tag:
 	@docker tag $(SOURCE_IMAGE) $(TARGET_IMAGE)

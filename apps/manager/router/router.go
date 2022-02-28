@@ -88,7 +88,7 @@ func New(config *config.Config) *Router {
 			fmt.Println(err)
 		}
 
-		resp, err := http.Get("http://10.101.40.192:4000/info")
+		resp, err := http.Get("http://dev-auth-service:4000/info")
 		if err != nil {
 			fmt.Println(err)
 		}

@@ -2,19 +2,29 @@ package router
 
 import (
 	"auth/config"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // Router is a app level router.
 type Router struct {
 	*gin.Engine
+}
+
+type Post struct {
+	_id  string `bson:"title,omitempty"`
+	name string `bson:"body,omitempty"`
 }
 
 // New initializes new gin router.
@@ -23,6 +33,8 @@ func New(config *config.Config) *Router {
 	r := gin.New()
 
 	r.Use(gin.Recovery())
+
+	r.Use(CORSMiddleware())
 
 	r.GET("/info", func(c *gin.Context) {
 		password, err := ioutil.ReadFile("/data/PASSWORD")
@@ -84,7 +96,7 @@ func New(config *config.Config) *Router {
 			fmt.Println(err)
 		}
 
-		resp, err := http.Get("http://10.96.180.160:5000/info")
+		resp, err := http.Get("http://dev-manager-service:5000/info")
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -112,5 +124,77 @@ func New(config *config.Config) *Router {
 		})
 	})
 
+	r.GET("/data", func(c *gin.Context) {
+		// Set client options
+		clientOptions := options.Client().ApplyURI("mongodb://auth:auth@example-mongodb-svc.dev-mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false")
+
+		// Connect to MongoDB
+		client, err := mongo.Connect(context.TODO(), clientOptions)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Check the connection
+		err = client.Ping(context.TODO(), nil)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println("Connected to MongoDB!")
+
+		collection := client.Database("auth").Collection("sample")
+
+		cur, err := collection.Find(context.TODO(), bson.D{{}})
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		var results []*Post
+		for cur.Next(context.TODO()) {
+
+			// create a value into which the single document can be decoded
+			var elem Post
+			err := cur.Decode(&elem)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			results = append(results, &elem)
+		}
+
+		if err := cur.Err(); err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(results)
+		// Close the cursor once finished
+		cur.Close(context.TODO())
+
+		fmt.Printf("Found multiple documents (array of pointers): %+v\n", results)
+
+		c.JSON(200, gin.H{
+			"message": "Success",
+			"data":    &results,
+		})
+	})
+
 	return &Router{r}
+}
+
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "*")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
 }

@@ -1,0 +1,25 @@
+---
+version: '3'
+
+volumes:
+  mssql-data:
+  postgres-data:
+
+services:
+  nginx:
+    container_name: 'app-nginx'
+    build: '../nginx/'
+    command: [nginx-debug, '-g', 'daemon off;']
+    ports:
+      - '80:80'
+    depends_on:
+      - auth
+
+  auth:
+    container_name: 'app-auth'
+    build: '../auth/'
+    env_file:
+      - ../auth/.env
+    ports:
+      - '4000:4000'
+    command: [go, run, main.go]
