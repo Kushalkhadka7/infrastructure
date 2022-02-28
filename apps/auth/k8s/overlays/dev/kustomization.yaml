@@ -6,11 +6,15 @@ commonLabels:
   release: dev
 namespace: dev
 resources:
-- ../../base
+  - ../../base
 images:
-- name: crkushal7/auth
-  newTag: 1.0.0
+  - name: crkushal7/auth
+    newTag: 2.1.3
 configMapGenerator:
-- envs:
-  - .env
-  name: auth-config
+  - name: auth-config
+    literals:
+      - NAME=auth
+      - PORT=4000
+      - HOST=localhost
+      - ADMIN_URL=dev-admin-service
+      - MANAGER_URL=dev-manager-service

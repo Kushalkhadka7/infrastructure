@@ -33,7 +33,7 @@ spec:
 
       containers:
         - name: auth
-          image: crkushal7/auth:2.1.3
+          image: crkushal7/auth:1.0.0
           imagePullPolicy: Always
           volumeMounts:
             - name: auth-cred
