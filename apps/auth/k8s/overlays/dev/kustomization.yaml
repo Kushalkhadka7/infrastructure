@@ -10,7 +10,7 @@ resources:
 images:
 - name: crkushal7/auth
   newName: crkushal7/auth
-  newTag: auth-main-fce1462c97d3d0cda58e35e5173d0ff51640eba6
+  newTag: auth-main-8662f4ec1b552f08c2cb728fbca79242aee22792
 configMapGenerator:
 - envs:
   - .env
