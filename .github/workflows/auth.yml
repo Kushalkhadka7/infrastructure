@@ -31,10 +31,6 @@ jobs:
         run: |
           go fmt
 
-      - name: test
-        run: |
-          go test -v
-
       - name: Build app
         run: |
           go build auth
@@ -76,7 +72,7 @@ jobs:
           git config --global user.name "test-bot"
           git config --global user.email "test-bot@infra.com"
           git add .
-          git commit -m "${{ github.head_ref }}"
+          git commit -m "Updated Kustomization file"
 
       - name: Push to branch
         uses: CasperWA/push-protected@v2
