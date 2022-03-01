@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+// Main function.
 func main() {
 
 	config, err := config.New()
@@ -20,7 +21,7 @@ func main() {
 
 	server := server.New(config, router)
 	if err := server.Start(); err != nil {
-		fmt.Println("Unable to start server...%s", err)
+		fmt.Printf("Unable to start server...%s", err)
 		os.Exit(1)
 	}
 
