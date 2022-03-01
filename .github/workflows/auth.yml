@@ -1,9 +1,10 @@
 name: Core - Build
 
 on:
-  push:
+  pull_request:
+    types: [synchronize, closed, opened]
     branches:
-      - main
+      - dev
 
 defaults:
   run:
@@ -12,6 +13,7 @@ defaults:
 jobs:
   app:
     runs-on: ubuntu-latest
+    if: "github.event_name == 'pull_request' && !github.event.pull_request.merged"
 
     steps:
       - name: Checkout
@@ -37,6 +39,7 @@ jobs:
 
   build-image:
     runs-on: ubuntu-latest
+    if: "(contains(github.base_ref, 'dev') && github.event.pull_request.merged)"
 
     steps:
       - name: Checkout
