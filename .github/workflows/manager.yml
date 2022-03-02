@@ -1,4 +1,4 @@
-name: Auth Build
+name: Manager Build
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: "./apps/auth/"
+    working-directory: "./apps/manager/"
 
 jobs:
   app:
@@ -35,7 +35,7 @@ jobs:
 
       - name: Build app
         run: |
-          go build auth
+          go build manager
 
   build-image:
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
         with:
           filters: |
             src:
-              - 'apps/auth/k8s/**'
+              - 'apps/manager/k8s/**'
 
       - name: Login to Docker Hub
         if: steps.changes.outputs.src == 'false'

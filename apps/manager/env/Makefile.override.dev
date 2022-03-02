@@ -1,1 +1,3 @@
 export STAGE = dev
+export VERSION=2.0.1
+export REGISTRY_URL=crkushal7
