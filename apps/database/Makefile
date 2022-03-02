@@ -28,6 +28,7 @@ APP_ROOT ?= $(shell 'pwd')
 
 export ENVIRONMENT_OVERRIDE_PATH ?= $(APP_ROOT)/env/Makefile.override.dev
 export OVERLAY_PATH ?= ./overlays/$(STAGE)
+export OVERLAY_ROOT ?= ./overlays
 
 export ENV_FILE ?= .env
 export HOST_PORT ?= 4000
@@ -70,8 +71,8 @@ run: ## run docker contianer
 
 
 edit-kustomize:
-	echo $(ENV_PATH)
-	@cp $(OVERLAY_PATH)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
+	@echo $(ENV_PATH)
+	@cp $(OVERLAY_ROOT)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
 	@cp $(ENV_PATH) $(OVERLAY_PATH)/.env
 	@cp $(CONFIG_ENV_PATH) $(OVERLAY_PATH)/.config.env
 	@cd $(OVERLAY_PATH) && kustomize edit add secret mongo-secret --from-env-file .env && kustomize edit add configmap mongo-config --from-env-file .config.env

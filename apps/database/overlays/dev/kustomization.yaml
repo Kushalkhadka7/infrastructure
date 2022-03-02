@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: dev-
+commonLabels:
+  app: dev-mongo
+  release: dev
+namespace: dev
+resources:
+  - ../../base
+images:
+  - name: crkushal7/database
+    newName: crkushal7/database
+secretGenerator:
+  - envs:
+      - .env
+    name: mongo-secret
+    type: Opaque
+configMapGenerator:
+  - envs:
+      - .config.env
+    name: mongo-config

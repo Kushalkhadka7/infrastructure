@@ -8,5 +8,5 @@ namespace: dev
 resources:
   - ../../base
 images:
-  - name: app/auth
-    newName: crkushal7/app/auth
+  - name: crkushal7/database
+    newName: crkushal7/database
