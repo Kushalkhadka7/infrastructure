@@ -8,5 +8,5 @@ namespace: dev
 resources:
   - ../../base
 images:
-  - name: app/manager
-    newName: crkushal7/app/manager
+  - name: crkushal7/manager
+    newName: crkushal7/manager

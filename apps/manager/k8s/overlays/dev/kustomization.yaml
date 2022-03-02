@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: dev-
+commonLabels:
+  app: dev-manager
+  release: dev
+namespace: dev
+resources:
+  - ../../base
+images:
+  - name: crkushal7/manager
+    newName: crkushal7/manager
+configMapGenerator:
+  - envs:
+      - .env
+    name: manager-config
