@@ -26,8 +26,12 @@ export PRINT_HELP_PYSCRIPT
 
 APP_ROOT ?= $(shell 'pwd')
 
+export GIT_COMMIT ?= $(shell git rev-parse HEAD)
+export GIT_BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
+
 export ENVIRONMENT_OVERRIDE_PATH ?= $(APP_ROOT)/env/Makefile.override.dev
 export OVERLAY_PATH ?= k8s/overlays/$(STAGE)
+export OVERLAY_ROOT ?= k8s/overlays
 
 export ENV_FILE ?= .env
 export HOST_PORT ?= 80
@@ -38,11 +42,16 @@ export DOCKER_BUILD_FLAGS ?= --no-cache
 export DOCKER_BUILD_PATH ?= $(APP_ROOT)
 export SOURCE_IMAGE ?= nginx
 export DOCKER_FILE ?= $(APP_ROOT)/Dockerfile
-export TARGET_IMAGE ?= $(REGISTRY_URL)/$(SOURCE_IMAGE):$(VERSION)
+export TARGET_IMAGE ?= $(REGISTRY_URL)/nginx
+export TARGET_IMAGE_LATEST ?= $(TARGET_IMAGE):$(SOURCE_IMAGE)-$(GIT_BRANCH)-$(GIT_COMMIT)
 
 -include $(ENVIRONMENT_OVERRIDE_PATH)
 include $(APP_ROOT)/Makefile.app
 export ENV_PATH ?= $(APP_ROOT)/.env
+
+define kustomize-image-edit
+	cd $(OVERLAY_PATH) && kustomize edit set image crkushal7/nginx=$(1) && cd $(APP_ROOT)
+endef
 
 build-local: ## build docker image for local use
 	@docker build $(DOCKER_BUILD_FLAGS) -t $(SOURCE_IMAGE) --target $(TARGET_STAGE) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
@@ -54,13 +63,13 @@ build-prod: ## build docker image for prod env
 	@docker build $(DOCKER_BUILD_FLAGS) -t $(SOURCE_IMAGE) --target $(STAGE_PROD) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
 
 docker-build: ## build docker image
-	@docker build $(DOCKER_BUILD_FLAGS) -t $(TARGET_IMAGE) --target $(TARGET_STAGE) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
+	@docker build $(DOCKER_BUILD_FLAGS) -t $(SOURCE_IMAGE) -f $(DOCKER_FILE) $(DOCKER_BUILD_PATH)
 
 docker-tag:
-	@docker tag $(SOURCE_IMAGE) $(TARGET_IMAGE)
+	@docker tag $(SOURCE_IMAGE) $(TARGET_IMAGE_LATEST)
 
 docker-push: ## docker push
-	@docker push $(TARGET_IMAGE)
+	@docker push $(TARGET_IMAGE_LATEST)
 
 docker-login:
 	@docker login --username $(DOCKER_USER_NAME) --password-stdin $(DOCKER_HUB_PASSWORD)
@@ -68,10 +77,12 @@ docker-login:
 run: ## run docker contianer
 	@docker run -p $(HOST_PORT):$(CONTINER_PORT) --env-file=$(ENV_FILE) $(SOURCE_IMAGE)
 
+edit-image-name: edit-kustomize ## edit image name in kustomize
+	@$(call kustomize-image-edit,$(TARGET_IMAGE_LATEST))
 
 edit-kustomize:
-	echo $(ENV_PATH)
-	@cp $(OVERLAY_PATH)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
+	@echo $(ENV_PATH)
+	@cp $(OVERLAY_ROOT)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
 	@cp $(ENV_PATH) $(OVERLAY_PATH)/.env
 	@cd $(OVERLAY_PATH) && kustomize edit add configmap nginx-config --from-env-file .env
 

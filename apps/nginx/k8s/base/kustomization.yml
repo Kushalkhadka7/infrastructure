@@ -5,6 +5,5 @@ commonLabels:
 namespace: dev
 resources:
   - service.yml
-  - namespace.yml
   - deployment.yml
   - secrets.yml
