@@ -76,7 +76,7 @@ edit-kustomize:
 	echo $(ENV_PATH)
 	@cp $(OVERLAY_ROOT)/kustomization.template.yaml $(OVERLAY_PATH)/kustomization.yaml
 	@cp $(ENV_PATH) $(OVERLAY_PATH)/.env
-	@cd $(OVERLAY_PATH) && kustomize edit add configmap auth-config --from-env-file .env
+	@cd $(OVERLAY_PATH) && kustomize edit add configmap manager-config --from-env-file .env
 
 apply:## Kubectl apply using kustomize
 	@kustomize build $(OVERLAY_PATH) | kubectl apply -f -
