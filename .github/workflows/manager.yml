@@ -35,7 +35,7 @@ jobs:
 
       - name: Build app
         run: |
-          go build auth
+          go build manager
 
   build-image:
     runs-on: ubuntu-latest
