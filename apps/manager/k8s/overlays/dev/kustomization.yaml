@@ -14,4 +14,4 @@ images:
 configMapGenerator:
   - envs:
       - .env
-    name: auth-config
+    name: manager-config
