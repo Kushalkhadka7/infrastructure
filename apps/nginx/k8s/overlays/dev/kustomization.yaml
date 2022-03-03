@@ -6,12 +6,12 @@ commonLabels:
   release: dev
 namespace: dev
 resources:
-  - ../../base
+- ../../base
 images:
-  - name: crkushal7/nginx
-    newName: crkushal7/nginx
-    newTag: nginx-main-d51388ed1eb383dd258305b100168f846abf27e6
+- name: crkushal7/nginx
+  newName: crkushal7/nginx
+  newTag: nginx-main-c62d9a2cf5fde975aefa1442e4bbe9532e9688af
 configMapGenerator:
-  - envs:
-      - .env
-    name: nginx-config
+- envs:
+  - .env
+  name: nginx-config
