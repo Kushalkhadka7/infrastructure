@@ -10,7 +10,7 @@ resources:
 images:
   - name: crkushal7/manager
     newName: crkushal7/manager
-    newTag: manager-dev-e7677fd6326bba9778bcc10ed4001941e12bedbd
+    newTag: manager-main-679fc9464ad16fce3fe4e2bc25745350547f996f
 configMapGenerator:
   - envs:
       - .env
