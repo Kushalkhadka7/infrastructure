@@ -6,12 +6,12 @@ commonLabels:
   release: dev
 namespace: dev
 resources:
-  - ../../base
+- ../../base
 images:
-  - name: crkushal7/manager
-    newName: crkushal7/manager
-    newTag: manager-main-679fc9464ad16fce3fe4e2bc25745350547f996f
+- name: crkushal7/manager
+  newName: crkushal7/manager
+  newTag: manager-main-41e52cc2e0b53abe738fe1a436b1de70f873e568
 configMapGenerator:
-  - envs:
-      - .env
-    name: manager-config
+- envs:
+  - .env
+  name: manager-config
