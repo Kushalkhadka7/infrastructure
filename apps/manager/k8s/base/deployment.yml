@@ -75,3 +75,18 @@ spec:
                 configMapKeyRef:
                   name: dev-manager-config
                   key: MANAGER_URL
+            - name: MONGO_DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dev-mongo-config-f4tf898fkh
+                  key: MONGO_DB_URL
+            - name: DB_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: dev-mongo-secret-2h79b4gm99
+                  key: DB_USER_NAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dev-mongo-secret-2h79b4gm99
+                  key: DB_PASSWORD

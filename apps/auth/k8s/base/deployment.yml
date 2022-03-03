@@ -41,6 +41,11 @@ spec:
 
             - name: shared-volume
               mountPath: /data2
+          resources:
+            limits:
+              cpu: "300m"
+            requests:
+              cpu: "50m"
           ports:
             - containerPort: 4000
               protocol: TCP
