@@ -5,6 +5,9 @@ on:
     types: [synchronize, closed, opened]
     branches:
       - main
+    paths:
+      - .github/workflows/auth.yml
+      - "services/admin/**"
 
 defaults:
   run:
