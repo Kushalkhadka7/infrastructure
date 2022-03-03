@@ -172,6 +172,7 @@ func New(config *config.Config) *Router {
 		// Close the cursor once finished
 		cur.Close(context.TODO())
 
+		// Close the cursor once finished
 		fmt.Printf("Found multiple documents (array of pointers): %+v\n", results)
 
 		c.JSON(200, gin.H{
