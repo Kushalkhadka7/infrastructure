@@ -169,7 +169,7 @@ func New(config *config.Config) *Router {
 		}
 
 		fmt.Println(results)
-		// Close the cursor once finished
+		// Close the cursor once finished.
 		cur.Close(context.TODO())
 
 		fmt.Printf("Found multiple documents (array of pointers): %+v\n", results)
