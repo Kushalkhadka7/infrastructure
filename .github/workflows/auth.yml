@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [synchronize, closed, opened]
     branches:
-      - dev
+      - main
 
 defaults:
   run:
@@ -39,7 +39,7 @@ jobs:
 
   build-image:
     runs-on: ubuntu-latest
-    if: "(contains(github.base_ref, 'dev') && github.event.pull_request.merged)"
+    if: "(contains(github.base_ref, 'main') && github.event.pull_request.merged)"
 
     steps:
       - name: Checkout
