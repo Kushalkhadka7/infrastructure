@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - .github/workflows/manager.yml
-      - "services/manager/**"
+      - "apps/manager/**"
 
 defaults:
   run:

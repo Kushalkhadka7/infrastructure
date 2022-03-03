@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - .github/workflows/auth.yml
-      - "services/admin/**"
+      - "apps/auth/**"
 
 defaults:
   run:
