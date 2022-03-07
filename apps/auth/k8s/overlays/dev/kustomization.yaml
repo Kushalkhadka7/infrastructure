@@ -6,12 +6,12 @@ commonLabels:
   release: dev
 namespace: dev
 resources:
-  - ../../base
+- ../../base
 images:
-  - name: crkushal7/auth
-    newName: crkushal7/auth
-    newTag: auth-dev-524b02766b51af71df5e536da33b692c2d5fa2ea
+- name: crkushal7/auth
+  newName: crkushal7/auth
+  newTag: auth-main-3bc606a5a69616580e83b3e7c62aff9d1fe35546
 configMapGenerator:
-  - envs:
-      - .env
-    name: auth-config
+- envs:
+  - .env
+  name: auth-config
