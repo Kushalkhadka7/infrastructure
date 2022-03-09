@@ -7,7 +7,7 @@ import ReactJson from 'react-json-view';
 function App() {
   const [appData, setAppData] = useState(null);
   const handleAuthClick = async () => {
-    fetch('http://localhost/auth/info')
+    fetch('http://dev-nginx-service/auth/info')
       .then((response) => response.json())
       .then((data) => setAppData(data.data));
   };

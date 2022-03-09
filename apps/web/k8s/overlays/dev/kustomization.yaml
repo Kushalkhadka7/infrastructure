@@ -10,7 +10,7 @@ resources:
 images:
   - name: crkushal7/web
     newName: crkushal7/web
-    newTag: web-main-7deed817d66a43c4bf34d668071ea7ba93d26a72
+    newTag: web-main-dc0e33be7f33ccaf28a47267f2a5ea8da9812501
 configMapGenerator:
   - envs:
       - .env
