@@ -3,7 +3,9 @@ kind: Service
 metadata:
   namespace: dev
   name: auth-service
-  service: auth-service
+  labels:
+    name: auth-service
+    service: auth-service
 spec:
   selector:
     app: auth

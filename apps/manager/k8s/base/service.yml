@@ -3,7 +3,10 @@ kind: Service
 metadata:
   namespace: dev
   name: manager-service
-  service: manager-service
+  labels:
+    name: manager-service
+    service: manager-service
+
 spec:
   selector:
     app: manager
