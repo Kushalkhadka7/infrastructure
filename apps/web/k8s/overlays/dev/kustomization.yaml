@@ -10,7 +10,7 @@ resources:
 images:
   - name: crkushal7/manager
     newName: crkushal7/web
-    newTag: web-main-cbfb7c19cab4731e71f614544f56abc541c97072
+    newTag: web-main-227b610cbd3eb56f1b99d07aefc620e3de5258ea
   - name: crkushal7/web
     newName: crkushal7/web
 configMapGenerator:
