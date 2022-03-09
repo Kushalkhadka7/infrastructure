@@ -8,9 +8,9 @@ namespace: dev
 resources:
   - ../../base
 images:
-  - name: crkushal7/manager
+  - name: crkushal7/web
     newName: crkushal7/web
-    newTag: web-main-227b610cbd3eb56f1b99d07aefc620e3de5258ea
+    newTag: web-main-5798c1629f536cd55d785b5865c7884a4e4f55f0
   - name: crkushal7/web
     newName: crkushal7/web
 configMapGenerator:
