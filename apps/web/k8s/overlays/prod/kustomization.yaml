@@ -28,6 +28,10 @@ patches:
       spec:
         template:
           spec:
+            volumes:
+              - name: auth-cred
+                secret:
+                  secretName: prod-auth-secret
             containers:
               - name: web
                 env:
