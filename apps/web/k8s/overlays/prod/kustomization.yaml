@@ -10,7 +10,7 @@ resources:
 images:
   - name: crkushal7/web
     newName: crkushal7/web
-    newTag: web-main-9b5d8d3e58265b99b0bcc69edcf391acf4695d93
+    newTag: web-main-47e1580460e0a054c9add82a2294ecfe656f94fb
 replicas:
   - count: 3
     name: web
