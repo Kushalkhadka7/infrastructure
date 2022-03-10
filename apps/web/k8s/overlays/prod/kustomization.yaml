@@ -8,8 +8,15 @@ namespace: dev
 resources:
   - ../../base
 images:
+  - name: crkushal7/manager
+    newName: crkushal7/web
+    newTag: web-main-47e1580460e0a054c9add82a2294ecfe656f94fb
   - name: crkushal7/web
     newName: crkushal7/web
 replicas:
-  - name: web
-    count: 5
+  - count: 3
+    name: web
+configMapGenerator:
+  - envs:
+      - .env
+    name: web-config

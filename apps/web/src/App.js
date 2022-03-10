@@ -11,9 +11,18 @@ function App() {
       .then((response) => response.json())
       .then((data) => setAppData(data.data));
   };
+  const handleNginxClick = async () => {
+    fetch('http://dev-nginx-service:80')
+      .then((response) => response.json())
+      .then((data) => setAppData(data.data));
+  };
+
   return (
     <div className='App'>
       <header className='App-header'>
+        <Button variant='contained' color='success' onClick={handleNginxClick}>
+          Call nginx
+        </Button>
         <Button variant='contained' color='success' onClick={handleAuthClick}>
           Call Auth
         </Button>
