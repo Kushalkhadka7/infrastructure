@@ -8,11 +8,9 @@ namespace: prod
 resources:
   - ../../base
 images:
-  - name: crkushal7/manager
-    newName: crkushal7/web
-    newTag: web-main-9b5d8d3e58265b99b0bcc69edcf391acf4695d93
   - name: crkushal7/web
     newName: crkushal7/web
+    newTag: web-main-9b5d8d3e58265b99b0bcc69edcf391acf4695d93
 replicas:
   - count: 3
     name: web
