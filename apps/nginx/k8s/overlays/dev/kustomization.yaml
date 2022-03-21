@@ -10,7 +10,7 @@ resources:
 images:
   - name: crkushal7/nginx
     newName: crkushal7/nginx
-    newTag: nginx-main-81c756d95d1b16f48843824c50b6b3f0b807f43a
+    newTag: nginx-main-a2da85e2b39cb8502779073dd65437676b5904b7
 configMapGenerator:
   - envs:
       - .env
